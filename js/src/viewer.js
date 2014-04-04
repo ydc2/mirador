@@ -74,9 +74,8 @@
 
 
     addParsePluginForAnnotorius: function() {
-      anno.addPlugin('Parse', {
-        'app_id': $.DEFAULT_SETTINGS.openLayersAnnotoriusView.appId,
-        'js_key': $.DEFAULT_SETTINGS.openLayersAnnotoriusView.jsKey
+      anno.addPlugin('YaleIIIF', {
+        'base_url': $.DEFAULT_SETTINGS.openLayersAnnotoriusView.baseUrl
       });
     },
 

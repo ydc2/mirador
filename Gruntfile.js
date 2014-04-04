@@ -73,7 +73,7 @@ module.exports = function(grunt) {
     'js/src/annotationLayerRegionController.js',
     'js/src/annotationListing.js',
     'js/src/annotationSidePanel.js',
-
+    'js/src/annotationsLayer.js',
   ],
 
   specs = 'spec/**/*js';

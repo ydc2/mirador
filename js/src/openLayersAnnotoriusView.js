@@ -17,7 +17,6 @@
       zoomLevelCutOff:  750
     }, options);
 
-    anno.reset();
 
     this.mapId = 'map-' + $.genUUID();
 
@@ -27,7 +26,14 @@
 
     this.currentImg = this.imagesList[this.currentImgIndex];
 
-    annotorious.plugin.Parse.prototype.addSrc(this.currentImg.canvasId);
+    annotorious.plugin.YaleIIIF.prototype.removeLoadIndicators();
+    anno.reset();
+    annotorious.plugin.YaleIIIF.prototype.reset( {
+        'base_url': $.DEFAULT_SETTINGS.openLayersAnnotoriusView.baseUrl
+    });
+    annotorious.plugin.YaleIIIF.prototype.addCanvasHeight(this.currentImg.canvasHeight);
+    annotorious.plugin.YaleIIIF.prototype.addSrc(this.currentImg.canvasId);
+    annotorious.plugin.YaleIIIF.prototype._loadAnnotations(anno);
 
     this.calculateDimensionsForOlBaseLayer();
   };
@@ -47,7 +53,6 @@
           mapId: this.mapId
         }));
 
-      annotorious.plugin.Parse.prototype.loadAnnotations();
 
       this.loadOpenLayers();
       this.addToolbarAnno();

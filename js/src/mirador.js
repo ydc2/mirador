@@ -126,8 +126,7 @@ window.Mirador = window.Mirador || function(config) {
 
     // metadata view
     'openLayersAnnotoriusView': {
-      'appId': 'lQ9BqPkPRVJR4Qbe652BapTP2JVDNzS0G2k6GCWW', // Parse.com app id
-      'jsKey': 'VbYdon3U70Wi8aht9Y8Z2eRk3FmOsO2n1lQhx1vV', // Parse.com js_key
+      'baseUrl' : '',
       'height': 400,
       'width': 600,
       'maxSize': 2500, // max longest side to load in open layers

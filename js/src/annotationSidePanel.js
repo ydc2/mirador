@@ -64,6 +64,7 @@
                     title: annotation.title,
                     content: annotation.content,
                     type: annotation.type,
+                    annotatedBy: annotation.annotatedBy,
                     parent: _this
                 });
 

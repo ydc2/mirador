@@ -6,7 +6,8 @@
             id: null,
             title: null,
             content: null,
-            type: null
+            type: null,
+            annotatedBy: null
         }, options);
 
         this.create();
@@ -22,7 +23,8 @@
             templateData = {
                 id: this.id,
                 title: this.title,
-                content: this.content
+                content: this.content,
+                annotatedBy: this.annotatedBy
             };
 
             this.element = jQuery($.Templates.imageView.annotationListing(templateData));

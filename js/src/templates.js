@@ -190,6 +190,7 @@
               '<h3>{{{title}}}</h3>',
               '{{/if}}',
               '<p>{{{content}}}</p>',
+              '<p><i>{{annotatedBy}}</i></p>',
           '</li>'
         ].join('');
         Handlebars.registerPartial('annotationListing', templateString);

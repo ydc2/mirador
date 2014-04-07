@@ -27,12 +27,18 @@
     this.currentImg = this.imagesList[this.currentImgIndex];
 
     annotorious.plugin.YaleIIIF.prototype.removeLoadIndicators();
-    anno.reset();
-    annotorious.plugin.YaleIIIF.prototype.reset( {
-        'base_url': $.DEFAULT_SETTINGS.openLayersAnnotoriusView.baseUrl
-    });
-    annotorious.plugin.YaleIIIF.prototype.addCanvasHeight(this.currentImg.canvasHeight);
-    annotorious.plugin.YaleIIIF.prototype.addSrc(this.currentImg.canvasId);
+      anno.reset();
+      annotorious.plugin.YaleIIIF.prototype.reset(
+          {
+              'project_id' : $.viewer.openLayersAnnotoriusView.projectId,
+              'base_url' : $.viewer.openLayersAnnotoriusView.baseUrl,
+              'canvas_height' : this.currentImg.canvasHeight,
+              'manifest_uri' : $.manifests[this.parent.manifestId].uri,
+              'manifest_label' : this.currentImg.title,
+              'canvas_uri' : this.currentImg.canvasId,
+              'canvas_label' :  $.getTitlePrefix(this.parent.metadataDetails)
+          }
+      );
     annotorious.plugin.YaleIIIF.prototype._loadAnnotations(anno);
 
     this.calculateDimensionsForOlBaseLayer();

@@ -477,7 +477,8 @@
           jQuery.each($.viewer.widgets, function(index, widget) {
               if (widget.type === "openLayersAnnotoriusView" ) {
                   widget.element.on("dialogclose", $.debounce(function(event, ui) {
-                          if(typeof ui != 'undefined')  {
+                          if(typeof ui !== 'undefined')  {
+                              _this.createOpenSeadragonInstance(_this.currentImg.imageUrl);
                               _this.annotationsLayer.set('annotationUrls', _this.currentImg.annotations);
                               console.log("reloading annotations");
                           }

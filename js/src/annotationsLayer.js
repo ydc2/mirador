@@ -99,7 +99,7 @@
                                 content: resource.resource.full ? resource.resource.full.chars : resource.resource.chars,
                                 type: (resource.motivation).split(':')[1],
                                 id: $.genUUID(),
-                                annotatedBy: resource.annotatedBy ? resource.annotatedBy.name : '<unknown author>'
+                                annotatedBy: resource.annotatedBy ? resource.annotatedBy.name : 'unknown author'
                             };
 
                             annotation.osdFrame = $.getOsdFrame(annotation.region, _this.parent.currentImg);

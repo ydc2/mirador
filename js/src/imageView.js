@@ -394,7 +394,6 @@
       isLoaded();
 
       // win.location.reload();
-
       win.addEventListener('load', function() { alert(33); }, false);
     },
 
@@ -475,6 +474,17 @@
       navToolbar.on('click', selectorAnnotorius, function() {
         // _this.openAnnotoriusWindow();
         $.viewer.loadView('openLayersAnnotoriusView', _this.manifestId, _this.currentImg.id);
+          jQuery.each($.viewer.widgets, function(index, widget) {
+              if (widget.type === "openLayersAnnotoriusView" ) {
+                  widget.element.on("dialogclose", $.debounce(function(event, ui) {
+                          if(typeof ui != 'undefined')  {
+                              _this.annotationsLayer.set('annotationUrls', _this.currentImg.annotations);
+                              console.log("reloading annotations");
+                          }
+                      }, 500)
+                  );
+              }
+          });
       });
 
     },

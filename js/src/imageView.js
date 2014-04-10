@@ -480,7 +480,6 @@
                           if(typeof ui !== 'undefined')  {
                               _this.createOpenSeadragonInstance(_this.currentImg.imageUrl);
                               _this.annotationsLayer.set('annotationUrls', _this.currentImg.annotations);
-                              console.log("reloading annotations");
                           }
                       }, 500)
                   );

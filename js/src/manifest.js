@@ -97,6 +97,8 @@
 
                   return (annotation['@id'] + ".json");
                 });
+              } else {
+                  imageObj.annotations = [];
               }
 
               if (!_this.isDetailImage(image.on)) {

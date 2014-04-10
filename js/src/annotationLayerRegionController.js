@@ -112,7 +112,7 @@
     },
 
     hide: function() {
-      if (!this.parent.annotationUrls) {
+      if (!this.parent.annotationUrls || this.parent.annotationUrls.length === 0) {
         return;
       }
       this.parent.parent.osd.drawer.clearOverlays();

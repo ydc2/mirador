@@ -34,9 +34,9 @@
               'base_url' : $.viewer.openLayersAnnotoriusView.baseUrl,
               'canvas_height' : this.currentImg.canvasHeight,
               'manifest_uri' : $.manifests[this.parent.manifestId].uri,
-              'manifest_label' : this.currentImg.title,
+              'canvas_label' : this.currentImg.title,
               'canvas_uri' : this.currentImg.canvasId,
-              'canvas_label' :  $.getTitlePrefix(this.parent.metadataDetails)
+              'manifest_label' :  $.getTitlePrefix(this.parent.metadataDetails)
           }
       );
     annotorious.plugin.YaleIIIF.prototype._loadAnnotations(anno);

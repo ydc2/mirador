@@ -36,7 +36,8 @@
               'manifest_uri' : $.manifests[this.parent.manifestId].uri,
               'canvas_label' : this.currentImg.title,
               'canvas_uri' : this.currentImg.canvasId,
-              'manifest_label' :  $.getTitlePrefix(this.parent.metadataDetails)
+              'manifest_label' :  $.getTitlePrefix(this.parent.metadataDetails),
+              'annotation_lists' : this.currentImg.annotations
           }
       );
     annotorious.plugin.YaleIIIF.prototype._loadAnnotations(anno);

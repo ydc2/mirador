@@ -43,6 +43,32 @@
     this.parent.element.find('.mirador-widget-content').addClass(this.imageViewBgCls);
 
     this.currentImg = this.imagesList[this.currentImgIndex];
+
+     var  _this = this;
+    jQuery.ajax({
+        type: 'GET',
+        url: $.viewer.imageView.annotationListProvider,
+        data: {
+            'canvas': this.currentImg.canvasId,
+            'manifest': $.manifests[this.parent.manifestId].uri,
+            'projectId': $.viewer.openLayersAnnotoriusView.projectId
+        },
+        success: function (response) {
+            // TODO error handling if response status != 201 (CREATED)
+            console.log(response);
+            jQuery.map(response, function(uri, index) {
+                console.log(uri);
+                _this.currentImg.annotations.push(uri);
+            });
+        },
+        error: function(j, t, e) {
+          alert(t);
+        },
+        headers: {
+            'X-CSRF-Token': jQuery('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
   };
 
 

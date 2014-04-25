@@ -47,6 +47,7 @@
      var  _this = this;
     jQuery.ajax({
         type: 'GET',
+        async: false,
         url: $.viewer.imageView.annotationListProvider,
         data: {
             'canvas': this.currentImg.canvasId,
@@ -57,8 +58,10 @@
             // TODO error handling if response status != 201 (CREATED)
             console.log(response);
             jQuery.map(response, function(uri, index) {
-                console.log(uri);
-                _this.currentImg.annotations.push(uri);
+                if (jQuery.inArray(uri, _this.currentImg.annotations) < 0) {
+                    _this.currentImg.annotations.push(uri);
+                    console.log(uri);
+                }
             });
         },
         error: function(j, t, e) {

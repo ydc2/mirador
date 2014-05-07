@@ -44,38 +44,42 @@
 
     this.currentImg = this.imagesList[this.currentImgIndex];
 
-     var  _this = this;
-    jQuery.ajax({
-        type: 'GET',
-        async: false,
-        url: $.viewer.imageView.annotationListProvider,
-        data: {
-            'canvas': this.currentImg.canvasId,
-            'manifest': $.manifests[this.parent.manifestId].uri,
-            'projectId': $.viewer.openLayersAnnotoriusView.projectId
-        },
-        success: function (response) {
-            // TODO error handling if response status != 201 (CREATED)
-            console.log(response);
-            jQuery.map(response, function(uri, index) {
-                if (jQuery.inArray(uri, _this.currentImg.annotations) < 0) {
-                    _this.currentImg.annotations.push(uri);
-                    console.log(uri);
-                }
-            });
-        },
-        error: function(j, t, e) {
-          alert(t);
-        },
-        headers: {
-            'X-CSRF-Token': jQuery('meta[name="csrf-token"]').attr('content')
-        }
-    });
 
+    this.loadAnnotationListsForCanvas();
   };
 
 
   $.ImageView.prototype = {
+
+      loadAnnotationListsForCanvas: function() {
+        var _this = this;
+        jQuery.ajax({
+            type: 'GET',
+            async: false,
+            url: $.viewer.imageView.annotationListProvider,
+            data: {
+                'canvas': this.currentImg.canvasId,
+                'manifest': $.manifests[this.parent.manifestId].uri,
+                'projectId': $.viewer.openLayersAnnotoriusView.projectId
+            },
+            success: function (response) {
+                // TODO error handling if response status != 201 (CREATED)
+                console.log(response);
+                jQuery.map(response, function (uri, index) {
+                    if (jQuery.inArray(uri, _this.currentImg.annotations) < 0) {
+                        _this.currentImg.annotations.push(uri);
+                        console.log(uri);
+                    }
+                });
+            },
+            error: function (j, t, e) {
+                alert(t);
+            },
+            headers: {
+                'X-CSRF-Token': jQuery('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    },
 
     render: function() {
       this.addToolbarNav();
@@ -346,10 +350,8 @@
       if (next < this.imagesList.length) {
         this.currentImgIndex = next;
         this.currentImg = this.imagesList[next];
-
-        infoJsonUrl = this.currentImg.imageUrl;
-
-        this.createOpenSeadragonInstance(infoJsonUrl);
+        this.loadAnnotationListsForCanvas();
+        this.createOpenSeadragonInstance(this.currentImg.imageUrl);
         this.annotationsLayer.set('annotationUrls', this.currentImg.annotations);
       }
     },
@@ -366,7 +368,7 @@
       if (prev >= 0) {
         this.currentImgIndex = prev;
         this.currentImg = this.imagesList[prev];
-
+        this.loadAnnotationListsForCanvas();
         this.createOpenSeadragonInstance(this.currentImg.imageUrl);
         this.annotationsLayer.set('annotationUrls', this.currentImg.annotations);
       }

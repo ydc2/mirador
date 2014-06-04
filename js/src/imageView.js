@@ -57,6 +57,7 @@
         jQuery.ajax({
             type: 'GET',
             dataType: 'json',
+            cache: false,
             url: $.viewer.imageView.annotationListProvider,
             data: {
                 'canvas': this.currentImg.canvasId,

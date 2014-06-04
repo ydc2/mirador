@@ -89,7 +89,13 @@
                     {
                     url: url,
                     dataType: 'json',
-                    async: true,
+                    headers: {
+                        'X-CSRF-Token': jQuery('meta[name="csrf-token"]').attr('content'),
+                        Accept : "application/json"
+                    },
+                    xhrFields: {
+                        withCredentials: true
+                    },
                     cache: false,
                     success: function(jsonLd) {
                         jQuery.each(jsonLd.resources, function(index, resource) {

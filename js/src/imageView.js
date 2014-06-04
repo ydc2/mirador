@@ -28,7 +28,8 @@
       scaleCls:         'mirador-image-scale',
       selectedChoice:   '',
       statusbarCls:     'mirador-image-view-statusbar',
-      imageViewBgCls:   'mirador-image-view-bg'
+      imageViewBgCls:   'mirador-image-view-bg',
+      renderComplete:   false
     }, options);
 
 
@@ -55,7 +56,7 @@
         var _this = this;
         jQuery.ajax({
             type: 'GET',
-            async: false,
+            dataType: 'json',
             url: $.viewer.imageView.annotationListProvider,
             data: {
                 'canvas': this.currentImg.canvasId,
@@ -75,18 +76,31 @@
             error: function (j, t, e) {
                 alert(t);
             },
+            complete: function() {
+                _this.renderUI();
+            },
             headers: {
-                'X-CSRF-Token': jQuery('meta[name="csrf-token"]').attr('content')
+                'X-CSRF-Token': jQuery('meta[name="csrf-token"]').attr('content'),
+                Accept : "application/json"
+            },
+            xhrFields: {
+                withCredentials: true
             }
         });
     },
 
     render: function() {
-      this.addToolbarNav();
-      this.createOpenSeadragonInstance(this.currentImg.imageUrl);
-      this.addStatusbarNav();
-      this.attachWindowEvents();
-      this.addAnnotationsLayer();
+    },
+
+    renderUI: function() {
+      if (!this.rendered) {
+          this.addToolbarNav();
+          this.createOpenSeadragonInstance(this.currentImg.imageUrl);
+          this.addStatusbarNav();
+          this.attachWindowEvents();
+          this.addAnnotationsLayer();
+          this.rendered = true;
+      }
     },
 
     createOpenSeadragonInstance: function(imageUrl, osdBounds) {

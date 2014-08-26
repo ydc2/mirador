@@ -105,10 +105,33 @@
     },
 
     createOpenSeadragonInstance: function(imageUrl, osdBounds) {
+        var _this = this;
+        var infoJsonUrl = $.Iiif.getUri(imageUrl) + '/info.json';
+        var reqWithCredentials = false;
+        if (infoJsonUrl.indexOf("scale.ydc2.yale.edu") > 0) reqWithCredentials = true;
+
+        jQuery.ajax({
+            url: infoJsonUrl,
+            dataType: 'json',
+            async: true,
+            xhrFields: { withCredentials: reqWithCredentials },
+
+            success: function(data) {
+                json = data;
+                _this.finishCreatingOpenSeadragonInstance(imageUrl, osdBounds, json);
+            },
+
+            error: function(xhr, status, error) {
+                console.error(xhr, status, error);
+            }
+        });
+    },
+
+    finishCreatingOpenSeadragonInstance: function(imageUrl, osdBounds, infoJson) {
       var infoJsonUrl = $.Iiif.getUri(imageUrl) + '/info.json',
       osdId = 'mirador-osd-' + $.genUUID(),
       osdToolBarId = osdId + '-toolbar',
-      infoJson,
+      //infoJson,
       elemOsd,
       _this = this;
 
@@ -116,7 +139,7 @@
 
       this.addOpenSeadragonToolBar(osdToolBarId);
 
-      infoJson = $.getJsonFromUrl(infoJsonUrl, false);
+      //infoJson = $.getJsonFromUrl(infoJsonUrl, false);
 
       elemOsd =
         jQuery('<div/>')

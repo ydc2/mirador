@@ -54,7 +54,8 @@
 
       loadAnnotationListsForCanvas: function() {
         var _this = this;
-        jQuery.ajax({
+
+        var request = jQuery.ajax({
             type: 'GET',
             dataType: 'json',
             cache: false,
@@ -88,19 +89,26 @@
                 withCredentials: true
             }
         });
+
+        return request;
     },
 
     render: function() {
     },
 
     renderUI: function() {
+      var _this = this;
       if (!this.rendered) {
           this.addToolbarNav();
-          this.createOpenSeadragonInstance(this.currentImg.imageUrl);
-          this.addStatusbarNav();
-          this.attachWindowEvents();
-          this.addAnnotationsLayer();
-          this.rendered = true;
+          this.createOpenSeadragonInstance(this.currentImg.imageUrl).done(
+              function() {
+                  _this.addStatusbarNav();
+                  _this.attachWindowEvents();
+                  _this.addAnnotationsLayer();
+                  _this.rendered = true;
+              }
+          );
+
       }
     },
 
@@ -110,7 +118,7 @@
         var reqWithCredentials = false;
         if (infoJsonUrl.indexOf("scale.ydc2.yale.edu") > 0) reqWithCredentials = true;
 
-        jQuery.ajax({
+        var request = jQuery.ajax({
             url: infoJsonUrl,
             dataType: 'json',
             async: true,
@@ -125,6 +133,7 @@
                 console.error(xhr, status, error);
             }
         });
+        return request;
     },
 
     finishCreatingOpenSeadragonInstance: function(imageUrl, osdBounds, infoJson) {
@@ -378,6 +387,7 @@
 
 
     next: function() {
+      var _this = this;
       var next = this.currentImgIndex + 1,
       infoJsonUrl;
 
@@ -388,14 +398,21 @@
       if (next < this.imagesList.length) {
         this.currentImgIndex = next;
         this.currentImg = this.imagesList[next];
-        this.loadAnnotationListsForCanvas();
-        this.createOpenSeadragonInstance(this.currentImg.imageUrl);
-        this.annotationsLayer.set('annotationUrls', this.currentImg.annotations);
-      }
+        this.loadAnnotationListsForCanvas().done (
+            function () {
+                console.log("lists loaded");
+                _this.createOpenSeadragonInstance(_this.currentImg.imageUrl).done(
+                    function() {
+                        _this.annotationsLayer.set('annotationUrls', _this.currentImg.annotations);
+                    }
+                );
+            });
+       }
     },
 
 
     prev: function() {
+      var _this = this;
       var prev = this.currentImgIndex - 1,
       infoJsonUrl;
 
@@ -406,9 +423,15 @@
       if (prev >= 0) {
         this.currentImgIndex = prev;
         this.currentImg = this.imagesList[prev];
-        this.loadAnnotationListsForCanvas();
-        this.createOpenSeadragonInstance(this.currentImg.imageUrl);
-        this.annotationsLayer.set('annotationUrls', this.currentImg.annotations);
+        this.loadAnnotationListsForCanvas().done (
+            function () {
+                console.log("lists loaded");
+                _this.createOpenSeadragonInstance(_this.currentImg.imageUrl).done(
+                    function() {
+                        _this.annotationsLayer.set('annotationUrls', _this.currentImg.annotations);
+                    }
+                );
+            });
       }
     },
 
@@ -547,8 +570,11 @@
               if (widget.type === "openLayersAnnotoriusView" ) {
                   widget.element.on("dialogclose", $.debounce(function(event, ui) {
                           if(typeof ui !== 'undefined')  {
-                              _this.createOpenSeadragonInstance(_this.currentImg.imageUrl);
-                              _this.annotationsLayer.set('annotationUrls', _this.currentImg.annotations);
+                              _this.createOpenSeadragonInstance(_this.currentImg.imageUrl).done(
+                                  function() {
+                                      _this.annotationsLayer.set('annotationUrls', _this.currentImg.annotations);
+                                  }
+                              );
                           }
                       }, 500)
                   );

@@ -34,12 +34,14 @@
             // returns a promise object constructed using
             // jQuery.when.apply(this, [deferred array]);
             _this.getAnnotations().done( function() {
+                console.log("Rendering annotations");
                 _this.bottomPanel = new $.AnnotationBottomPanel({parent: _this});
                 _this.regionController = new $.AnnotationLayerRegionController({parent: _this});
                 _this.sidePanel = new $.AnnotationLayerSidePanel({parent: _this});
             });
 
             this.bindEvents();
+            console.log("AnnotationsLayer created");
         },
 
         get: function(prop) {
@@ -73,7 +75,7 @@
             return event;
         },
 
-        getAnnotations: function() {
+        getAnnotations: function(callback) {
             var _this = this,
             requests = [];
 
@@ -114,6 +116,7 @@
                         });
 
                         _this.computeAnnotationStats();
+                        console.log("Loaded " + url);
                     },
 
                     error: function() {
@@ -125,7 +128,13 @@
 
             });
 
-            return jQuery.when.apply(this, requests);
+            return jQuery.when.apply(this, jQuery.map(requests,
+                function(d) {
+                    var wrapDeferred = jQuery.Deferred();
+                    d.always(function() { wrapDeferred.resolve(); });
+                    return wrapDeferred.promise();
+                }
+            ));
         },
 
         bindEvents: function() {
@@ -184,6 +193,7 @@
 
             if (_this.annotations === null) {
                 _this.set('visible', false);
+                console.log("Returning, annotations is null");
                 return;
             }
 
@@ -191,7 +201,9 @@
                 _this.set('selectedAnnotation', null);
             }
 
+            console.log("Fetching annotations on page change.");
             _this.getAnnotations().done( function() {
+                console.log("Rendering annotations on page change");
                 _this.sidePanel.render();
                 _this.regionController.render();
             });

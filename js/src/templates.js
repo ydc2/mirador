@@ -121,7 +121,7 @@
           '<a href="javascript:;" class="mirador-btn mirador-icon-thumbnails-view"></a>',
           '<a href="javascript:;" class="mirador-btn mirador-icon-previous"></a>',
           '<a href="javascript:;" class="mirador-btn mirador-icon-next"></a>',
-          '<a href="javascript:;" class="mirador-btn mirador-icon-annotorius"></a>',
+          '{{#if showAnnotationButton}}<a href="javascript:;" class="mirador-btn mirador-icon-annotorius"></a>{{/if}}',
         '</div>'
       ].join('')),
 

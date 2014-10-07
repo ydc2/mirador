@@ -27,6 +27,7 @@
       scale:            null,
       scaleCls:         'mirador-image-scale',
       selectedChoice:   '',
+      showAnnotationButton: false,
       statusbarCls:     'mirador-image-view-statusbar',
       imageViewBgCls:   'mirador-image-view-bg',
       renderComplete:   false
@@ -45,6 +46,7 @@
 
     this.currentImg = this.imagesList[this.currentImgIndex];
 
+    this.showAnnotationButton = $.viewer.imageView.showAnnotationButton;
 
     this.loadAnnotationListsForCanvas();
   };
@@ -293,7 +295,8 @@
     addToolbarNav: function() {
       this.parent.toolbar.append($.Templates.imageView.navToolbar({
         navToolbarCls: this.navToolbarCls,
-        hasAnnotations: this.currentImg.annotations
+        hasAnnotations: this.currentImg.annotations,
+        showAnnotationButton: this.showAnnotationButton
       }));
 
       this.elemChoice = this.parent.toolbar.element.find('.' + this.navToolbarCls + ' .mirador-icon-choices');

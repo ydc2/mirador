@@ -23,8 +23,8 @@
     if (this.imageId !== null) {
       this.currentImgIndex = this.getImageIndexById(this.imageId);
     }
-
     this.currentImg = this.imagesList[this.currentImgIndex];
+    this.parent.element.dialog('option', 'title', this.getTitle());
 
     annotorious.plugin.YaleIIIF.prototype.removeLoadIndicators();
       anno.reset();
@@ -89,6 +89,20 @@
 
       anno.makeAnnotatable(this.olMap);
     },
+
+      getTitle: function() {
+          var titles = [];
+          titles.push(
+                  $.getViewLabel(this.parent.type) + ' : ' +
+                  $.getTitlePrefix(this.parent.metadataDetails)
+          );
+
+          if (this.currentImg.title) {
+              titles.push(this.currentImg.title);
+          }
+
+          return titles.join(" / ");
+      },
 
 
     resize: function() {

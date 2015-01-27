@@ -20,6 +20,14 @@
       Mirador({
         "workspaceAutoSave": false,
         "id": "viewer",
+          'openLayersAnnotoriusView': {
+              'baseUrl': 'http://annotations.ydc2.yale.edu/',
+              'projectId' : 'hours'
+          },
+          'imageView' : {
+              'annotationListProvider' : 'http://127.0.0.1:3000/lists',
+              'showAnnotationButton' : true
+          },
         "data": [{
           "manifestUri": "data/Walters/bd183mz0176/Manifest.json",
           "title": "MS 530",

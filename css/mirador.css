@@ -132,7 +132,7 @@
 }
 
 .mirador-listing-collections select {
-  width: 240px;
+  width: 500px;
 }
 
 .mirador-listing-collections legend {
@@ -141,7 +141,7 @@
 
 .mirador-listing-collections ul {
   display: none;
-  height: 300px;
+  height: 500px;
   overflow: auto;
   padding: 0;
 }

@@ -220,7 +220,7 @@
 
           groupedList[location].push({
             manifestId:       manifestId,
-            collectionTitle:  $.trimStringBy($.getCollectionTitle(manifest.metadata), 60),
+            collectionTitle:  $.trimStringBy($.getCollectionTitle(manifest.metadata), 100),
             imageData:        $.getImageTitlesAndIds(manifest.sequences[0].imagesList)
           });
         });

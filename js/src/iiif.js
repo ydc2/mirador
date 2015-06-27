@@ -18,19 +18,31 @@
 
     getUriWithHeight: function(uri, height) {
       uri = uri.replace(/\/$/, '');
+
       return this.getUri(uri) + '/full/,' + height + '/0/native.jpg';
     },
 
+      getImageUriWithHeight: function(image, height) {
+          var uri = image.imageUrl.replace(/\/$/, '');
+          var quality = image.imageProfile.contains('api/image/2/') ? "default.jpg" : "native.jpg";
+          return this.getUri(uri) + '/full/,' + height + '/0/' + quality;
+      },
+
 
     prepJsonForOsd: function(json) {
-      json.image_host    = this.getImageHostUrl(json);
-      json.scale_factors = this.packageScaleFactors(json);
-      json.profile       = json.profile.replace(/image-api\/1.\d/, 'image-api');
 
-      if (!json.tile_width) {
-        json.tile_width = 256;
-        json.tile_height = 256;
+      if (jQuery.isArray(json.profile)) {
+
+      } else {
+          json.image_host    = this.getImageHostUrl(json);
+          json.scale_factors = this.packageScaleFactors(json);
+          json.profile = json.profile.replace(/image-api\/1.\d/, 'image-api');
+          if (!json.tile_width) {
+              json.tile_width = 256;
+              json.tile_height = 256;
+          }
       }
+
 
       return json;
     },

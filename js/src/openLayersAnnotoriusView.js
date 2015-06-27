@@ -79,7 +79,7 @@
 
       baseLayer = new OpenLayers.Layer.Image(
         this.currentImg.title,
-        $.Iiif.getUriWithHeight(this.currentImg.imageUrl, this.olLayer.height),
+        $.Iiif.getImageUriWithHeight(this.currentImg, this.olLayer.height),
         new OpenLayers.Bounds(0, 0, this.olLayer.width, this.olLayer.height),
         new OpenLayers.Size(this.bestFitSize.width, this.bestFitSize.height)
       );

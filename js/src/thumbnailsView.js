@@ -45,7 +45,7 @@
 
       tplData.thumbs = jQuery.map(this.imagesList, function(image, index) {
         return {
-          thumbUrl: $.Iiif.getUriWithHeight(image.imageUrl, _this.thumbsMaxHeight),
+          thumbUrl: $.Iiif.getImageUriWithHeight(image, _this.thumbsMaxHeight),
           title:    image.title,
           id:       image.id
         };

@@ -138,6 +138,7 @@
         width:        image.width || 0,
         id:           image.service['@id'],
         imageUrl:     image.service['@id'].replace(/\/$/, ''),
+        imageProfile: image.service.profile,
         choices:      [],
         choiceLabel:  image.label || 'Default'
       };

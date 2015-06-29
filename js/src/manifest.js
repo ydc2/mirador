@@ -138,7 +138,7 @@
         width:        image.width || 0,
         id:           image.service['@id'],
         imageUrl:     image.service['@id'].replace(/\/$/, ''),
-        imageProfile: image.service.profile,
+        imageProfile: image.service.profile || 'http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level1',
         choices:      [],
         choiceLabel:  image.label || 'Default'
       };
